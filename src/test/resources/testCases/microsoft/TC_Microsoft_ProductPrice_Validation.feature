@@ -1,5 +1,6 @@
 Feature: Microsoft product prices in website
 
+  @MicrosoftProdPriceValidation
   Scenario: Microsoft product price validations over Microsoft website
     Given Launch browser
     When Go to Microsoft website homepage

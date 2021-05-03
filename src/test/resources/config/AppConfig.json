@@ -1,0 +1,8 @@
+{
+  "WEBDRIVERS": {
+    "CHROMERIVER_HOME": "D://WebDrivers//chromedriver_win32//chromedriver.exe"
+  },
+  "TESTDATA": {
+    "PRODUCT_SEARCH": "Visual Studio"
+  }
+}

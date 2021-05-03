@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.TestProperties;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,10 +18,13 @@ public class MicrosoftVisualStudioProductSteps {
     WebDriver driver;
     String itemPrice;
 
+    TestProperties testProperties = new TestProperties();
 
     @Given("Launch browser")
     public void launch_browser() {
-        System.setProperty("webdriver.chrome.driver","D://WebDrivers//chromedriver_win32//chromedriver.exe");
+        String webDriverPath = testProperties.getWebDriver("CHROMERIVER_HOME");
+        System.setProperty("webdriver.chrome.driver", webDriverPath);
+
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         System.out.println("****Browser is open");
@@ -28,7 +32,9 @@ public class MicrosoftVisualStudioProductSteps {
 
     @When("Go to Microsoft website homepage")
     public void go_to_microsoft_website_homepage() {
-        driver.get("https://www.microsoft.com/en-us/");
+        String endpoint = testProperties.getEndpoints(System.getProperty("environment"), "MICROSOFT_MAINPAGE");
+
+        driver.get(endpoint);
         WebDriverWait wait = new WebDriverWait(driver, 6);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"shellmenu_0\"]")));
     }
@@ -103,9 +109,12 @@ public class MicrosoftVisualStudioProductSteps {
 
     @Then("Search for Visual studio")
     public void search_for_visual_studio() {
+        String testData = testProperties.testData("PRODUCT_SEARCH");
+
         WebElement search =  driver.findElement(By.xpath("//*[@id=\"cli_shellHeaderSearchInput\"]"));
         search.click();
-        search.sendKeys("visual studio");
+        //search.sendKeys("visual studio");
+        search.sendKeys(testData);
         driver.findElement(By.xpath("//*[@id=\"search\"]")).click();
         System.out.println("****Visual Studio search completed");
     }
